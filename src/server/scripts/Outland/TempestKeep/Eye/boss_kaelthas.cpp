@@ -274,19 +274,13 @@ enum MovementPoints
     POINT_END_TRANSITION                 = 6
 };
 
-uint32 const SummonWeaponsSpells[] =
+constexpr uint32 SummonWeaponsSpells[] =
 {
     SPELL_SUMMON_WEAPONA, SPELL_SUMMON_WEAPONB, SPELL_SUMMON_WEAPONC, SPELL_SUMMON_WEAPOND,
     SPELL_SUMMON_WEAPONE, SPELL_SUMMON_WEAPONF, SPELL_SUMMON_WEAPONG
 };
 
-uint32 const RemoveWeaponsSpells[] =
-{
-    SPELL_REMOVE_WEAPONA, SPELL_REMOVE_WEAPONB, SPELL_REMOVE_WEAPONC, SPELL_REMOVE_WEAPOND,
-    SPELL_REMOVE_WEAPONE, SPELL_REMOVE_WEAPONF, SPELL_REMOVE_WEAPONG
-};
-
-uint32 GravityLapseSpells[] =
+constexpr uint32 GravityLapseSpells[] =
 {
     SPELL_GRAVITY_LAPSE_TELE_FRONT,
     SPELL_GRAVITY_LAPSE_TELE_FRONT_RIGHT,
@@ -315,12 +309,10 @@ uint32 GravityLapseSpells[] =
     SPELL_GRAVITY_LAPSE_TELE_CASTER_BACK_RIGHT3
 };
 
-const float CAPERNIAN_DISTANCE          = 20.0f;            //she casts away from the target
-//const float KAEL_VISIBLE_RANGE          = 50.0f;
+constexpr float CAPERNIAN_DISTANCE          = 20.0f;            //she casts away from the target
+//constexpr float KAEL_VISIBLE_RANGE          = 50.0f;
 
-Position const afGravityPos = {795.0f, 0.0f, 70.0f};
-
-Position const TransitionPos[6] =
+constexpr Position TransitionPos[6] =
 {
     // First two values are not static, they seem to differ on each sniff.
     { 794.0522f, -0.96732f, 48.97848f, 0.0f },
@@ -1385,27 +1377,6 @@ class spell_kaelthas_summon_weapons : public SpellScript
     }
 };
 
-// 39497 - Remove Enchanted Weapons
-class spell_kaelthas_remove_weapons : public SpellScript
-{
-    bool Validate(SpellInfo const* /*spellInfo*/) override
-    {
-        return ValidateSpellInfo(RemoveWeaponsSpells);
-    }
-
-    void HandleScript(SpellEffIndex /*effIndex*/)
-    {
-        if (Player* player = GetHitPlayer())
-            for (uint32 spells : RemoveWeaponsSpells)
-                player->CastSpell(player, spells, TRIGGERED_FULL_MASK & ~TRIGGERED_IGNORE_POWER_AND_REAGENT_COST);
-    }
-
-    void Register() override
-    {
-        OnEffectHitTarget += SpellEffectFn(spell_kaelthas_remove_weapons::HandleScript, EFFECT_0, SPELL_EFFECT_SCRIPT_EFFECT);
-    }
-};
-
 void AddSC_boss_kaelthas()
 {
     RegisterTheEyeCreatureAI(boss_kaelthas);
@@ -1419,5 +1390,4 @@ void AddSC_boss_kaelthas()
     RegisterSpellScript(spell_kael_gravity_lapse);
     RegisterSpellScript(spell_kaelthas_flame_strike);
     RegisterSpellScript(spell_kaelthas_summon_weapons);
-    RegisterSpellScript(spell_kaelthas_remove_weapons);
 }

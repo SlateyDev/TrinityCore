@@ -28,6 +28,7 @@
 #include "GridNotifiers.h"
 #include "InstanceScript.h"
 #include "Map.h"
+#include "MapUtils.h"
 #include "MotionMaster.h"
 #include "ObjectAccessor.h"
 #include "PathGenerator.h"
@@ -398,39 +399,32 @@ enum AnduinWrynnSpellVisuals
     SPELL_VISUAL_CHEST_LOOT     = 114023,
 };
 
-Position const PreIntroductionAssistersPositions[3] =
+constexpr Position PreIntroductionAssistersPositions[3] =
 {
     { -3826.9548f, -2626.2761f, 78.9296f, 4.644121f }, // Jaina
     { -3831.6807f, -2626.2761f, 78.9296f, 5.460620f }, // Uther
     { -3818.7300f, -2626.2800f, 78.9296f, 4.558697f }, // Sylvanas
 };
 
-Position const AssistersSpawnPos[3] =
-{
-    { -3824.65f, -2692.20f, 91.3485f, 4.64412f}, // Jaina
-    { -3828.03f, -2688.25f, 91.3485f, 5.46062f}, // Uther
-    { -3819.48f, -2687.19f, 91.3485f, 4.55870f}, // Sylvanas
-};
+//constexpr Position FirimOutroductionPos = { -3830.0156f, -2676.7969f, 91.56402f };
+constexpr Position QuartermasterRahmPos = { -3824.9565f, -2673.0190f, 91.44697f, 4.7163963f };
+constexpr Position LeftKnightPosition = { -3815.4097f, -2677.1824f, 91.44697f, 4.742376f };
+constexpr Position RightKnightPosition = { -3834.6807f, -2677.42360f, 91.44697f, 4.6956997f };
 
-Position const FirimOutroductionPos = { -3830.0156f, -2676.7969f, 91.56402f };
-Position const QuartermasterRahmPos = { -3824.9565f, -2673.0190f, 91.44697f, 4.7163963f };
-Position const LeftKnightPosition = { -3815.4097f, -2677.1824f, 91.44697f, 4.742376f };
-Position const RightKnightPosition = { -3834.6807f, -2677.42360f, 91.44697f, 4.6956997f };
+constexpr Position DominationGraspCenter = { -3825.0601f, -2715.4600f, 91.3567f, 1.6260f };
 
-Position const DominationGraspCenter = { -3825.0601f, -2715.4600f, 91.3567f, 1.6260f };
-
-Position const IntermissionAssistersTeleportPosition[3] =
+constexpr Position IntermissionAssistersTeleportPosition[3] =
 {
     { -3828.472f, -2688.191f, 91.2652f, 1.9153f }, // Sylvanas
     { -3819.519f, -2687.170f, 91.2652f, 2.1812f }, // Uther
     { -3824.960f, -2692.550f, 91.2652f, 1.5733f }, // Jaina
 };
 
-Position const AnduinsDespairSpawnPosition = { -3828.355957f, -2704.1875f, 91.350716f, 4.982021f };
+constexpr Position AnduinsDespairSpawnPosition = { -3828.355957f, -2704.1875f, 91.350716f, 4.982021f };
 
-Position const AnduinsSoulSpawnPosition = { -3825.060059f, -2715.459961f, 91.356697f, 1.626040f };
+constexpr Position AnduinsSoulSpawnPosition = { -3825.060059f, -2715.459961f, 91.356697f, 1.626040f };
 
-Position const AnduinsDoubtSpawnPositions[4] =
+constexpr Position AnduinsDoubtSpawnPositions[4] =
 {
     {  -3852.638916f, -2687.373291f, 91.348526f, 5.560700f }, // Right of Uther
     {  -3852.845459f, -2742.732666f, 91.348534f, 0.961583f }, // Next Right
@@ -438,7 +432,7 @@ Position const AnduinsDoubtSpawnPositions[4] =
     {  -3799.805664f, -2740.925293f, 91.348541f, 2.247305f }, // Next Left
 };
 
-Position const AnduinsHopeSpawnPosition[4] =
+constexpr Position AnduinsHopeSpawnPosition[4] =
 {
     {  -3825.149414f, -2711.508789f, 91.354919f, 1.463445f }, // In front of Anduin
     {  -3828.751709f, -2715.171875f, 91.354919f, 3.221487f }, // Left of Anduin
@@ -446,9 +440,9 @@ Position const AnduinsHopeSpawnPosition[4] =
     {  -3825.180664f, -2719.208252f, 91.354820f, 4.741285f }, // Behind Anduin
 };
 
-Position const RemnantOfAFallenKingSpawnPosition = { -3825.2466f, -2700.0486f, 91.3650f, 1.3762f };
+constexpr Position RemnantOfAFallenKingSpawnPosition = { -3825.2466f, -2700.0486f, 91.3650f, 1.3762f };
 
-Position const GrimReflectionsSpawnPositions[4] =
+constexpr Position GrimReflectionsSpawnPositions[4] =
 {
     { -3825.389f, -2739.4202f, 91.431305f, 4.8445f}, // back side of Anduin
     { -3849.8438f, -2715.0574f, 91.40953f, 2.9961f}, // left side of Anduin
@@ -468,9 +462,9 @@ Position const MarchOfTheDamnedSpawnPositions[8] =
     { -3810.4290f, -2751.0903f, 91.53032f, 1.9584f } // Fourth Left
 };
 
-Position const BeaconOfHopeSpawnPosition = { -3825.0417f, -2715.3923f, 91.3568f, 0.0f };
+constexpr Position BeaconOfHopeSpawnPosition = { -3825.0417f, -2715.3923f, 91.3568f, 0.0f };
 
-Position const ChestLootSpawnPosition = { -3840.9915f, -2741.7847f, 91.26521f, 1.334929f };
+constexpr Position ChestLootSpawnPosition = { -3840.9915f, -2741.7847f, 91.26521f, 1.334929f };
 
 class ActivateGhouls : public BasicEvent
 {
@@ -783,14 +777,14 @@ struct boss_anduin_wrynn : public BossAI
                     if (!jaina)
                         return;
 
-                    Conversation* convo = Conversation::CreateConversation(CONVERSATION_INTRO, me, me->GetPosition(), ObjectGuid::Empty, nullptr, false);
-                    if (!convo)
+                    Conversation* conversation = Conversation::CreateConversation(CONVERSATION_INTRO, me, me->GetPosition(), ObjectGuid::Empty, nullptr, false);
+                    if (!conversation)
                         return;
 
-                    convo->AddActor(NPC_UTHER_THE_LIGHTBRINGER_ANDUIN, 1, uther->GetGUID());
-                    convo->AddActor(NPC_SYLVANAS_WINDRUNNER_ANDUIN, 2, sylvanas->GetGUID());
-                    convo->AddActor(NPC_LADY_JAINA_PROUDMOORE_ANDUIN, 3, jaina->GetGUID());
-                    convo->Start();
+                    conversation->AddActor(NPC_UTHER_THE_LIGHTBRINGER_ANDUIN, 1, uther->GetGUID());
+                    conversation->AddActor(NPC_SYLVANAS_WINDRUNNER_ANDUIN, 2, sylvanas->GetGUID());
+                    conversation->AddActor(NPC_LADY_JAINA_PROUDMOORE_ANDUIN, 3, jaina->GetGUID());
+                    conversation->Start();
                 });
 
                 scheduler.Schedule(35s, [this](TaskContext /*task*/)
@@ -834,15 +828,15 @@ struct boss_anduin_wrynn : public BossAI
 
                 firim->GetMotionMaster()->MovePath(PATH_OUTRODUCTION_FIRIM, false);
 
-                Conversation* convo = Conversation::CreateConversation(CONVERSATION_ANDUIN_OUTRODUCTION, me, me->GetPosition(), ObjectGuid::Empty, nullptr, false);
-                if (!convo)
+                Conversation* conversation = Conversation::CreateConversation(CONVERSATION_ANDUIN_OUTRODUCTION, me, me->GetPosition(), ObjectGuid::Empty, nullptr, false);
+                if (!conversation)
                     break;
 
-                convo->AddActor(NPC_LADY_JAINA_PROUDMOORE_ANDUIN, 1, jaina->GetGUID());
-                convo->AddActor(NPC_SYLVANAS_WINDRUNNER_ANDUIN, 2, sylvanas->GetGUID());
-                convo->AddActor(NPC_UTHER_THE_LIGHTBRINGER_ANDUIN, 3, uther->GetGUID());
-                convo->AddActor(NPC_FIRIM_ANDUIN, 4, firim->GetGUID());
-                convo->Start();
+                conversation->AddActor(NPC_LADY_JAINA_PROUDMOORE_ANDUIN, 1, jaina->GetGUID());
+                conversation->AddActor(NPC_SYLVANAS_WINDRUNNER_ANDUIN, 2, sylvanas->GetGUID());
+                conversation->AddActor(NPC_UTHER_THE_LIGHTBRINGER_ANDUIN, 3, uther->GetGUID());
+                conversation->AddActor(NPC_FIRIM_ANDUIN, 4, firim->GetGUID());
+                conversation->Start();
                 break;
             }
             case ACTION_ARTHAS_INTERMISSION_UTHER:
@@ -850,10 +844,10 @@ struct boss_anduin_wrynn : public BossAI
                 instance->DoUpdateWorldState(WORLD_STATE_ANDUIN_INTERMISSION, 1);
                 if (Creature* uther = instance->GetCreature(DATA_UTHER_THE_LIGHTBRINGER_ANDUIN))
                 {
-                    if (Conversation* convo = Conversation::CreateConversation(CONVERSATION_ARTHAS_UTHER, me, me->GetPosition(), ObjectGuid::Empty, nullptr, false))
+                    if (Conversation* conversation = Conversation::CreateConversation(CONVERSATION_ARTHAS_UTHER, me, me->GetPosition(), ObjectGuid::Empty, nullptr, false))
                     {
-                        convo->AddActor(NPC_UTHER_THE_LIGHTBRINGER_ANDUIN, 1, uther->GetGUID());
-                        convo->Start();
+                        conversation->AddActor(NPC_UTHER_THE_LIGHTBRINGER_ANDUIN, 1, uther->GetGUID());
+                        conversation->Start();
                     }
                 }
                 break;
@@ -863,10 +857,10 @@ struct boss_anduin_wrynn : public BossAI
                 instance->DoUpdateWorldState(WORLD_STATE_ANDUIN_INTERMISSION, 2);
                 if (Creature* sylvanas = instance->GetCreature(DATA_SYLVANAS_WINDRUNNER_ANDUIN))
                 {
-                    if (Conversation* convo = Conversation::CreateConversation(CONVERSATION_ARTHAS_SYLVANAS, me, me->GetPosition(), ObjectGuid::Empty, nullptr, false))
+                    if (Conversation* conversation = Conversation::CreateConversation(CONVERSATION_ARTHAS_SYLVANAS, me, me->GetPosition(), ObjectGuid::Empty, nullptr, false))
                     {
-                        convo->AddActor(NPC_SYLVANAS_WINDRUNNER_ANDUIN, 1, sylvanas->GetGUID());
-                        convo->Start();
+                        conversation->AddActor(NPC_SYLVANAS_WINDRUNNER_ANDUIN, 1, sylvanas->GetGUID());
+                        conversation->Start();
                     }
                 }
                 break;
@@ -2928,23 +2922,12 @@ class spell_anduin_wrynn_wicked_star_selector_AuraScript : public AuraScript
     }
 };
 
+// 365017 - Wicked Star CreatePropertiesId: 24322
+// 365017 - Wicked Star CreatePropertiesId: 24740
 // 365017 - Wicked Star CreatePropertiesId: 24741
 struct at_anduin_wrynn_wicked_star : AreaTriggerAI
 {
     at_anduin_wrynn_wicked_star(AreaTrigger* areatrigger) : AreaTriggerAI(areatrigger) { }
-
-    static constexpr float GetWickedStarSpeed(Difficulty difficulty)
-    {
-        // in yards per second
-        switch (difficulty)
-        {
-            case DIFFICULTY_HEROIC_RAID:
-            case DIFFICULTY_MYTHIC_RAID:
-                return 18.0f;
-            default: // LFR + Normal
-                return 15.0f;
-        }
-    }
 
     void OnInitialize() override
     {
@@ -2957,13 +2940,10 @@ struct at_anduin_wrynn_wicked_star : AreaTriggerAI
 
             std::vector<G3D::Vector3> splinePoints;
             splinePoints.push_back(PositionToVector3(at->GetPosition()));
-            splinePoints.push_back(PositionToVector3(at->GetPosition()));
             splinePoints.push_back(PositionToVector3(destPos));
             splinePoints.push_back(PositionToVector3(at->GetPosition()));
-            splinePoints.push_back(PositionToVector3(at->GetPosition()));
 
-            float timeToTarget = at->GetDistance(destPos.GetPositionX(), destPos.GetPositionY(), destPos.GetPositionZ()) * 2 / GetWickedStarSpeed(at->GetMap()->GetDifficultyID()) * 1000;
-            at->InitSplines(std::move(splinePoints), timeToTarget);
+            at->InitSplines(splinePoints);
         }
     }
 
@@ -2978,9 +2958,9 @@ struct at_anduin_wrynn_wicked_star : AreaTriggerAI
             return;
 
         if (caster->IsValidAttackTarget(unit))
-            caster->CastSpell(unit, SPELL_WICKED_STAR_DAMAGE_SILENCE, CastSpellExtraArgs(TriggerCastFlags(TRIGGERED_IGNORE_GCD | TRIGGERED_IGNORE_CAST_IN_PROGRESS)));
+            caster->CastSpell(unit, SPELL_WICKED_STAR_DAMAGE_SILENCE, TRIGGERED_IGNORE_GCD | TRIGGERED_IGNORE_CAST_IN_PROGRESS);
         else if (caster->IsValidAssistTarget(unit))
-            caster->CastSpell(unit, SPELL_WICKED_STAR_EMPOWERMENT, CastSpellExtraArgs(TriggerCastFlags(TRIGGERED_IGNORE_GCD | TRIGGERED_IGNORE_CAST_IN_PROGRESS)));
+            caster->CastSpell(unit, SPELL_WICKED_STAR_EMPOWERMENT, TRIGGERED_IGNORE_GCD | TRIGGERED_IGNORE_CAST_IN_PROGRESS);
     }
 
     void OnDestinationReached() override
@@ -3008,8 +2988,6 @@ struct at_anduin_wrynn_empowered_wicked_star : public at_anduin_wrynn_wicked_sta
 {
     at_anduin_wrynn_empowered_wicked_star(AreaTrigger* areatrigger) : at_anduin_wrynn_wicked_star(areatrigger) { }
 
-    static float constexpr EMPOWERED_WICKED_STAR_SPEED = 14.0f; // in yards per second
-
     void HandleMovement(float angle) const
     {
         Unit* caster = at->GetCaster();
@@ -3022,12 +3000,9 @@ struct at_anduin_wrynn_empowered_wicked_star : public at_anduin_wrynn_wicked_sta
 
         std::vector<G3D::Vector3> splinePoints;
         splinePoints.push_back(PositionToVector3(at));
-        splinePoints.push_back(PositionToVector3(at));
-        splinePoints.push_back(PositionToVector3(destPos));
         splinePoints.push_back(PositionToVector3(destPos));
 
-        float timeToTarget = at->GetDistance(destPos.GetPositionX(), destPos.GetPositionY(), destPos.GetPositionZ()) / EMPOWERED_WICKED_STAR_SPEED * 1000;
-        at->InitSplines(std::move(splinePoints), timeToTarget);
+        at->InitSplines(splinePoints);
     }
 
     void OnInitialize() override
